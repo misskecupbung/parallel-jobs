@@ -87,10 +87,10 @@ pipeline {
     stage("Deploy in Kubernetes Production"){
       steps {
         dir('k8s-files'){
-          sh 'kubectl set image deployment/hello-nginx hello-nginx=10.33.109.104/parallel-apps/hello-nginx:${IMAGE_TAG} -n parallel-apps'
-          sh 'kubectl set image deployment/hello-py hello-py=10.33.109.104/parallel-apps/hello-py:${IMAGE_TAG} -n parallel-apps'
-          sh 'kubectl set image deployment/pallete pallete=10.33.109.104/parallel-apps/pallete:${IMAGE_TAG} -n parallel-apps'
-          sh 'kubectl set image deployment/pengedit-md pengedit-md=10.33.109.104/parallel-apps/pengedit-md:${IMAGE_TAG} -n parallel-apps'
+          sh 'kubectl set image deployment/hello-nginx hello-nginx=10.33.109.104/parallel-jobs/hello-nginx:${IMAGE_TAG} -n parallel-jobs'
+          sh 'kubectl set image deployment/hello-py hello-py=10.33.109.104/parallel-jobs/hello-py:${IMAGE_TAG} -n parallel-jobs'
+          sh 'kubectl set image deployment/pallete pallete=10.33.109.104/parallel-jobs/pallete:${IMAGE_TAG} -n parallel-jobs'
+          sh 'kubectl set image deployment/pengedit-md pengedit-md=10.33.109.104/parallel-jobs/pengedit-md:${IMAGE_TAG} -n parallel-jobs'
         }
       }
     }

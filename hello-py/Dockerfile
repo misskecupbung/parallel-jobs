@@ -1,6 +1,5 @@
 FROM python:3-alpine
-WORKDIR /usr/src/app
-EXPOSE 8000
-COPY . .
-RUN pip install -qr requirements.txt
-CMD ["python3", "./server.py"]
+COPY . ./
+RUN pip install -r requirements.txt
+EXPOSE 8080
+ENTRYPOINT ["python3", "server.py"]
