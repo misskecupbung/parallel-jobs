@@ -21,7 +21,7 @@ services:
     network_mode: bridge
     restart: always
     ports:
-      - "8083:3000"
+      - "8083:5000"
   pengedit-md:
     container_name: pengedit-md
     image: 10.33.109.104/parallel-jobs/pengedit-md:latest
