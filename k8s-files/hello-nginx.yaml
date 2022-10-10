@@ -1,0 +1,33 @@
+hello-nginxVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-nginx
+  labels:
+    app: hello-nginx
+spec:
+  selector:
+    matchLabels:
+      app: hello-nginx
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: hello-nginx
+    spec:
+      containers:
+      - name: hello-nginx
+        image: 10.33.109.104/parallel-jobs/hello-nginx:latest
+        resources:
+          requests:
+            memory: "32Mi"
+            cpu: "64m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80

@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-py
+  labels:
+    app: hello-py
+spec:
+  selector:
+    matchLabels:
+      app: hello-py
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: hello-py
+    spec:
+      containers:
+      - name: hello-py
+        image: 10.33.109.104/parallel-jobs/hello-py:latest
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "128m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 6800
