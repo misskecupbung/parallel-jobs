@@ -3,35 +3,37 @@ pipeline {
   options {
     skipDefaultCheckout false
   }
+
   environment {
     harbor=credentials('harbor')
-    IMAGE_TAG = sh(returnStdout: true, script: "git rev-parse --short=10 HEAD").trim()
+    IM
+    AGE_TAG = sh(returnStdout: true, script: "git rev-parse --short=10 HEAD").trim()
   }
   stages {
-    stage("Build docker image") {
+    stage("Build Docker Images") {
       parallel {
-        stage("Build docker hello-nginx image") {
+        stage("Build hello-nginx Image") {
           steps {
             dir('hello-nginx') {
               sh 'docker build -t 10.33.109.104/parallel-jobs/hello-nginx:${IMAGE_TAG} .'
             }
           }
         }
-        stage("Build Docker Pallete image") {
+        stage("Build pallete Image") {
           steps {
             dir('pallete'){
               sh 'docker build -t 10.33.109.104/parallel-jobs/pallete:${IMAGE_TAG} .'
             }
           }
         }
-        stage("Build Docker pengedit-md Image") {
+        stage("Build pengedit-md Image") {
           steps {
             dir('pengedit-md'){
               sh 'docker build -t 10.33.109.104/parallel-jobs/pengedit-md:${IMAGE_TAG} .'
             }
           }
         }
-        stage("Build Docker hello-py Image") {
+        stage("Build hello-py Image") {
           steps {
             dir('hello-py'){
               sh 'docker build -t 10.33.109.104/parallel-jobs/hello-py:${IMAGE_TAG} .'
@@ -52,24 +54,24 @@ pipeline {
         sh 'echo $harbor_PSW | docker login 10.33.109.104 -u $harbor_USR --password-stdin'
       }
     }
-    stage("Push New images") {
+    stage("Push New Images") {
       parallel {
-        stage("Push Docker hello-nginx Image") {
+        stage("Push hello-nginx Image") {
           steps {
             sh 'docker push 10.33.109.104/parallel-jobs/hello-nginx:${IMAGE_TAG}'
           }
         }
-        stage("Push Docker Pallete Image") {
+        stage("Push pallete Image") {
           steps {
             sh 'docker push 10.33.109.104/parallel-jobs/pallete:${IMAGE_TAG}'
           }
         }
-        stage("Push Docker pengedit-md Image") {
+        stage("Push pengedit-md Image") {
           steps {
             sh 'docker push 10.33.109.104/parallel-jobs/pengedit-md:${IMAGE_TAG}'
           }
         }
-        stage("Push Docker hello-py Image") {
+        stage("Push hello-py Image") {
           steps {
             sh 'docker push 10.33.109.104/parallel-jobs/hello-py:${IMAGE_TAG}'
           }
@@ -77,7 +79,7 @@ pipeline {
       }
     }
 
-    stage("Run New Containers in Project") {
+    stage("Run Containers") {
       steps {
         sh 'sed -i "s/latest/${IMAGE_TAG}/g" docker-compose.yaml'
         sh 'docker compose -p parallel-jobs up -d'
@@ -95,9 +97,11 @@ pipeline {
       }
     }
   }
+  
   post {
     success {
       sh 'docker images'
+      sh 'kubectl get pods -n parallel-jobs'
     }
   }
 }

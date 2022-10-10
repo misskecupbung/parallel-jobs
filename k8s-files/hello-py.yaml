@@ -22,12 +22,5 @@ spec:
       containers:
       - name: hello-py
         image: 10.33.109.104/parallel-jobs/hello-py:latest
-        resources:
-          requests:
-            memory: "64Mi"
-            cpu: "128m"
-          limits:
-            memory: "128Mi"
-            cpu: "500m"
         ports:
-        - containerPort: 6800
+        - containerPort: 5000
