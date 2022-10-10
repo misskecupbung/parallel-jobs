@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  hello-nginx:
+    container_name: hello-nginx
+    image: 10.33.109.104/parallel-jobs/scrapy:latest
+    network_mode: bridge
+    restart: always
+    ports:
+      - "8081:80"
+  hello-py:
+    container_name: hello-py
+    image: 10.33.109.104/parallel-jobs/hello-py:latest
+    network_mode: bridge
+    restart: always
+    ports:
+      - "8082:8000"
+  pallete:
+    container_name: pallete
+    image: 10.33.109.104/parallel-jobs/pallete:latest
+    network_mode: bridge
+    restart: always
+    ports:
+      - "8083:3000"
+  pengedit-md:
+    container_name: pengedit-md
+    image: 10.33.109.104/parallel-jobs/pengedit-md:latest
+    network_mode: bridge
+    restart: always
+    ports:
+      - "8084:5000"

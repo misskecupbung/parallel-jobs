@@ -40,6 +40,13 @@ pipeline {
         }
       }
     }
+
+    stage("Remove Orpans Containers") {
+      steps {
+        sh 'docker compose -p parallel-jobs down'
+      }
+    }
+
     stage("Login to Harbor Registry") {
       steps {
         sh 'echo $harbor_PSW | docker login 10.33.109.104 -u $harbor_USR --password-stdin'
@@ -67,6 +74,13 @@ pipeline {
             sh 'docker push 10.33.109.104/parallel-jobs/hello-py:${IMAGE_TAG}'
           }
         }
+      }
+    }
+
+    stage("Run New Containers in Project") {
+      steps {
+        sh 'sed -i "s/latest/${IMAGE_TAG}/g" docker-compose.yaml'
+        sh 'docker compose -p parallel-jobs up -d'
       }
     }
   }
