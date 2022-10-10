@@ -44,7 +44,7 @@ pipeline {
 
     stage("Remove Orpans Containers") {
       steps {
-        sh 'docker compose -p parallel-jobs down'
+        sh 'docker-compose -p parallel-jobs down'
       }
     }
 
@@ -81,7 +81,7 @@ pipeline {
     stage("Run Containers") {
       steps {
         sh 'sed -i "s/latest/${IMAGE_TAG}/g" docker-compose.yaml'
-        sh 'docker compose -p parallel-jobs up -d'
+        sh 'docker-compose -p parallel-jobs up -d'
       }
     }
 
