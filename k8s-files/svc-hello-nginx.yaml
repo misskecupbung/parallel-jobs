@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: svc-hello-nginx
   labels:
-    run: svc-hello-nginx
+    app: svc-hello-nginx
 spec:
   type: NodePort
   ports:
@@ -12,4 +12,4 @@ spec:
     nodePort: 30103
     protocol: TCP
   selector:
-    name: hello-nginx
+    app: hello-nginx

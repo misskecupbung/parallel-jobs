@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: svc-pengedit-md
   labels:
-    run: svc-pengedit-md
+    app: svc-pengedit-md
 spec:
   type: NodePort
   ports:
@@ -12,4 +12,4 @@ spec:
     nodePort: 30104
     protocol: TCP
   selector:
-    name: pengedit-md
+    app: pengedit-md

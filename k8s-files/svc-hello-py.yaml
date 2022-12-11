@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: svc-hello-py
   labels:
-    run: svc-hello-py
+    app: svc-hello-py
 spec:
   type: NodePort
   ports:
@@ -12,4 +12,4 @@ spec:
     nodePort: 30102
     protocol: TCP
   selector:
-    name: hello-py
+    app: hello-py
